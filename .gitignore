@@ -1,0 +1,12 @@
+# Generated output folders — recreated by running the scripts
+Print_Sheets_HTML/
+Print_Sheets_PDF/
+Repo/
+
+# Windows system files
+Thumbs.db
+Desktop.ini
+.BIN/
+
+# PowerShell temp files
+*.tmp

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @page {
+    size: letter portrait;
+    margin: 0;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    width: 8.5in;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    background: #fff;
+    font-family: 'Arial', sans-serif;
+  }
+
+  /* 8.5" x 11" PAGE SHEET CONTAINER */
+  .sheet-container {
+    width: 8.5in;
+    height: 11in;
+    position: relative;
+    overflow: hidden;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    page-break-after: always;
+    break-after: page;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  @media print {
+    html, body {
+      width: 8.5in;
+      height: auto;
+      -webkit-print-color-adjust: exact;
+    }
+    .sheet-container {
+      page-break-after: always;
+      break-after: page;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+  }
+
+  /* 3x3 GRID LAYOUT */
+  .page-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 62mm);
+    grid-template-rows: repeat(3, 87mm);
+    position: relative;
+    z-index: 2;
+  }
+
+  .grid-cell {
+    width: 62mm;
+    height: 87mm;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  /* CROP MARKS OVERLAY */
+  .crop-marks-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 8.5in;
+    height: 11in;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .crop-line {
+    position: absolute;
+    background-color: #000;
+  }
+
+  .v-line { width: 0.5pt; height: 6mm; }
+  .v-top { top: 2mm; }
+  .v-bottom { bottom: 2mm; }
+
+  .h-line { height: 0.5pt; width: 6mm; }
+  .h-left { left: 6mm; }
+  .h-right { right: 6mm; }
+</style>
+</head>
+<body>
+
+  <!-- CARDS_PLACEHOLDER -->
+
+</body>
+</html>

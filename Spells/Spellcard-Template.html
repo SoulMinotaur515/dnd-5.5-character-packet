@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @page {
+    size: 2.5in 3.35in portrait;
+    margin: 0;
+  }
+  
+  html, body {
+    width: 2.5in;
+    height: 3.35in;
+    margin: 0;
+    padding: 0;
+    background: #fff;
+    font-family: 'Arial', sans-serif;
+    box-sizing: border-box;
+  }
+
+  /* Single Card Outer Container */
+  .card-container {
+    width: 2.5in;
+    height: 3.35in;
+    padding: 0.06in; /* Margin around black border */
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Card Container - Borderless canvas for inner elements & SVG overlay */
+  .card {
+    width: 100%;
+    height: 100%;
+    border: none; /* No outer borders; SVG overlay handles the side and bottom walls */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    position: relative;
+  }
+
+  /* --- HEADER AREA --- */
+  .header-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: 5;
+    height: 34px;
+    padding: 0; 
+    box-sizing: border-box;
+    margin-top: 0px; 
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
+  .title-banner {
+    flex: 1;
+    border: 2.5px solid #000;
+    border-radius: 16px;
+    padding: 0 10px 0 8px; 
+    background: #fff;
+    margin-right: -10px;
+    min-width: 0;
+    height: 32px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+  }
+
+  .title-text {
+    font-size: 8.5pt; /* Fixed font size for all titles */
+    font-weight: 900;
+    text-align: center;
+    line-height: 1.05;
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  .hex-badge {
+    width: 28px;
+    height: 32px;
+    flex-shrink: 0;
+    z-index: 3;
+  }
+
+  /* --- STATS GRID --- */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 0.85fr 1.35fr 0.8fr; 
+    height: 36px; 
+    border-top: 2.5px solid #000;    /* Internal divider (acts as top frame line) */
+    border-bottom: 2.5px solid #000; /* Internal divider */
+    text-align: center;
+    background: #fff;
+    box-sizing: border-box;
+    margin-top: 0px;
+  }
+
+  .stat-box {
+    border-right: 1px solid #000;
+    padding: 1px 1px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .stat-box:last-child {
+    border-right: none;
+  }
+
+  .stat-label {
+    font-size: 4.8pt;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+
+  .stat-value {
+    font-size: 6.8pt;
+    font-weight: bold;
+    margin-top: 1px;
+    line-height: 1.0;
+    text-align: center;
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  /* --- CARD BODY TEXT --- */
+  .card-body {
+    padding: 4px 6px;
+    font-size: 7.2pt;
+    line-height: 1.2;
+    flex-grow: 1;
+    overflow: hidden;
+  }
+
+  .body-text p {
+    margin: 0 0 3px 0;
+  }
+
+  /* --- FOOTER --- */
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3px 5px;
+    height: 28px;
+    font-size: 6.0pt;
+    font-style: italic;
+    font-weight: bold;
+    border-top: 1.5px solid #000; /* Internal divider */
+    background: #fff;
+    box-sizing: border-box;
+    flex-shrink: 0;
+  }
+
+  .card-footer > div:first-child {
+    max-width: 35%;
+    white-space: normal;
+    line-height: 1.05;
+    word-break: break-word;
+  }
+
+  .card-footer .edition-source {
+    font-weight: normal;
+    font-style: italic;
+    font-size: 5.5pt;
+    color: #444;
+    margin-top: 0;
+    line-height: 1.1;
+  }
+
+  .card-footer .school-name {
+    line-height: 1.1;
+  }
+
+  .card-footer > div:last-child {
+    max-width: 63%;
+    text-align: right;
+    white-space: normal;
+    line-height: 1.05;
+    word-break: break-word;
+  }
+</style>
+</head>
+<body>
+
+  <div class="card-container">
+  <div class="card">
+
+    <!-- SVG FRAME OVERLAY -->
+    <svg class="card-frame" style="position: absolute; top: 34px; left: 0; width: 100%; height: calc(100% - 34px); pointer-events: none; z-index: 10;">
+      <!-- Left side wall -->
+      <line x1="1.25" y1="0" x2="1.25" y2="100%" stroke="#000" stroke-width="2.5" />
+      <!-- Right side wall -->
+      <line x1="calc(100% - 1.25px)" y1="0" x2="calc(100% - 1.25px)" y2="100%" stroke="#000" stroke-width="2.5" />
+      <!-- Bottom wall -->
+      <line x1="0" y1="calc(100% - 1.25px)" x2="100%" y2="calc(100% - 1.25px)" stroke="#000" stroke-width="2.5" />
+    </svg>
+
+    <!-- HEADER -->
+    <div class="header-container">
+      <div class="title-banner">
+        <div class="title-text">{{Title}}</div>
+      </div>
+      <svg class="hex-badge" viewBox="0 0 100 115">
+        <polygon points="50,2 98,28 98,87 50,113 2,87 2,28" 
+                 fill="#ffffff" stroke="#000000" stroke-width="7" />
+        <text x="50" y="78" font-size="62" font-weight="bold" 
+              font-family="Arial" text-anchor="middle" fill="#000000">{{Level}}</text>
+      </svg>
+    </div>
+
+    <!-- STATS GRID -->
+    <div class="stats-grid">
+      <div class="stat-box">
+        <div class="stat-label">Range</div>
+        <div class="stat-value">{{Range}}</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">Duration</div>
+        <div class="stat-value">{{Duration}}</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">Casting Time</div>
+        <div class="stat-value">{{CastingTime}}</div>
+      </div>
+    </div>
+
+    <!-- BODY TEXT -->
+    <div class="card-body">
+      <div class="body-text">
+        {{Description}}
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="card-footer">
+      <div>
+        <div class="school-name">{{School}}</div>
+        <div class="edition-source">{{Edition}} · {{Source}}</div>
+      </div>
+      <div>{{Classes}}</div>
+    </div>
+  </div>
+  </div>
+
+</body>
+</html>
