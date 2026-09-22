@@ -93,15 +93,15 @@
   flex-grow: 1;
 }
 
-  /* ---- INDIVIDUAL SPELL ENTRY ---- */
-  .spell-entry {
+  /* ---- INDIVIDUAL CONTENT ENTRY ---- */
+  .content-entry {
     page-break-inside: avoid; /* Legacy support */
     break-inside: avoid;      /* Modern standard */
     break-inside: avoid-column; /* Multi-column specific */
     margin-bottom: 12px;
   }
-  /* Spell name — small caps style via font-variant */
-  .spell-name {
+  /* Content name — small caps style via font-variant */
+  .content-name {
     font-size: 9.5pt;
     font-weight: 900;
     font-variant: small-caps;
@@ -109,50 +109,50 @@
     margin: 0 0 1px 0;
   }
 
-  /* Subtitle: Level X Transmutation (Druid, Ranger) */
-  .spell-subtitle {
+  /* Subtitle / category information */
+  .content-subtitle {
     font-size: 7.5pt;
     font-style: italic;
     margin: 0 0 3px 0;
     color: #222;
   }
 
-  /* Property lines: Casting Time, Range, Duration */
-  .spell-properties {
+  /* Property lines */
+  .content-properties {
     margin: 0 0 4px 0;
   }
 
-  .spell-property {
+  .content-property {
     font-size: 7.5pt;
     line-height: 1.3;
     margin: 0;
   }
 
-  .spell-property .prop-label {
+  .content-property .prop-label {
     font-weight: bold;
   }
 
   /* Body text */
-  .spell-body {
+  .content-body {
     font-size: 7.5pt;
     line-height: 1.35;
     text-align: justify;
     margin: 0;
   }
 
-  .spell-body p {
+  .content-body p {
     margin: 0 0 3px 0;
   }
 
   /* Named options e.g. "Aquatic Adaptation." inline bold italic */
-  .spell-body b i,
-  .spell-body i b {
+  .content-body b i,
+  .content-body i b {
     font-style: italic;
     font-weight: bold;
   }
 
   /* Source line — small, right-aligned, de-emphasised */
-  .spell-source {
+  .content-source {
     font-size: 6pt;
     color: #666;
     font-style: italic;
@@ -185,3 +185,4 @@
   <!-- LEVEL_PAGES_PLACEHOLDER -->
 </body>
 </html>
+

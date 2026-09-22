@@ -60,7 +60,7 @@ param(
     [string]$PdfOutputDir       = (Join-Path $PSScriptRoot "Print_Sheets_PDF"),
     [string]$SheetTemplatePath  = (Join-Path $PSScriptRoot "Shared\Sheet-3x3-Template.html"),
     [string]$CardTemplatePath   = (Join-Path $PSScriptRoot "Spells\Spellcard-Template.html"),
-    [string]$DescTemplatePath   = (Join-Path $PSScriptRoot "Spells\Spell-Descriptions-Template.html"),
+    [string]$DescTemplatePath   = (Join-Path $PSScriptRoot "Shared\Description-Template.html"),
     [string]$BookIndexPath      = (Join-Path $PSScriptRoot "Shared\Book-Index.html"),
     [string]$MasterSpellsPath   = (Join-Path $PSScriptRoot "Repo\master-spells.json"),
     [string]$ChromeExe          = "C:\Program Files\Google\Chrome\Application\chrome.exe"
@@ -88,7 +88,7 @@ if (-not (Test-Path $PdfOutputDir))  { New-Item -ItemType Directory -Path $PdfOu
 foreach ($req in @(
     @{ Path = $SheetTemplatePath; Name = "Sheet-3x3-Template.html" },
     @{ Path = $CardTemplatePath;  Name = "Spellcard-Template.html" },
-    @{ Path = $DescTemplatePath;  Name = "Spell-Descriptions-Template.html" },
+    @{ Path = $DescTemplatePath;  Name = "Description-Template.html" },
     @{ Path = $BookIndexPath;     Name = "Book-Index.html" },
     @{ Path = $MasterSpellsPath;  Name = "master-spells.json" }
 )) {
@@ -390,16 +390,16 @@ foreach ($levelGroup in $byLevel) {
         } else { "" }
 
         $spellEntriesHtml.Add(@"
-<div class="spell-entry">
-  <div class="spell-name">$($s.name)</div>
-  <div class="spell-subtitle">$subtitle</div>
-  <div class="spell-properties">
-    <p class="spell-property"><span class="prop-label">Casting Time:</span> $castTime</p>
-    <p class="spell-property"><span class="prop-label">Range:</span> $range</p>
-    <p class="spell-property"><span class="prop-label">Duration:</span> $duration</p>
+<div class="content-entry">
+  <div class="content-name">$($s.name)</div>
+  <div class="content-subtitle">$subtitle</div>
+  <div class="content-properties">
+    <p class="content-property"><span class="prop-label">Casting Time:</span> $castTime</p>
+    <p class="content-property"><span class="prop-label">Range:</span> $range</p>
+    <p class="content-property"><span class="prop-label">Duration:</span> $duration</p>
   </div>
-  <div class="spell-body">$bodyHtml</div>
-  <div class="spell-source">$($s.sourceEdition) &middot; $($s.source)</div>
+  <div class="content-body">$bodyHtml</div>
+  <div class="content-source">$($s.sourceEdition) &middot; $($s.source)</div>
 </div>
 "@)
     }

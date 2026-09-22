@@ -80,7 +80,7 @@ param(
     [string]$PdfOutputDir          = (Join-Path $PSScriptRoot "Print_Sheets_PDF"),
     [string]$SheetTemplatePath     = (Join-Path $PSScriptRoot "Shared\Sheet-3x3-Template.html"),
     [string]$CardTemplatePath      = (Join-Path $PSScriptRoot "Features\Feature-Card-Template.html"),
-    [string]$DescTemplatePath      = (Join-Path $PSScriptRoot "Features\Feature-Descriptions-Template.html"),
+    [string]$DescTemplatePath      = (Join-Path $PSScriptRoot "Shared\Description-Template.html"),
     [string]$MasterFeaturesPath    = (Join-Path $PSScriptRoot "Repo\master-features.json"),
     [string]$ChromeExe             = "C:\Program Files\Google\Chrome\Application\chrome.exe"
 )
@@ -285,16 +285,16 @@ foreach ($f in $allFilteredContent) {
     # Add prerequisite line for feats that have one
     $prereqLine = ""
     if ($f.prerequisite) {
-        $prereqLine = "<div class=`"spell-property`"><span class=`"prop-label`">Prerequisite:</span> $($f.prerequisite)</div>"
+        $prereqLine = "<div class=`"content-property`"><span class=`"prop-label`">Prerequisite:</span> $($f.prerequisite)</div>"
     }
 
     $featureEntriesHtml.Add(@"
-<div class="spell-entry">
-  <div class="spell-name">$title</div>
-  <div class="spell-subtitle">$category ($badge)</div>
+<div class="content-entry">
+  <div class="content-name">$title</div>
+  <div class="content-subtitle">$category ($badge)</div>
   $prereqLine
-  <div class="spell-body">$bodyHtml</div>
-  <div class="spell-source">$source</div>
+  <div class="content-body">$bodyHtml</div>
+  <div class="content-source">$source</div>
 </div>
 "@)
 }
