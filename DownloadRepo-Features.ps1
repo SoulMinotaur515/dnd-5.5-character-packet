@@ -32,12 +32,12 @@ function ConvertFrom-5eToolsInlineTags {
 
     return [regex]::Replace(
         $Text,
-        '\\{@(?<tag>\\w+)\\s+(?<content>[^{}]+)\\}',
+        '\{@(?<tag>\w+)\s+(?<content>[^{}]+)\}',
         {
             param($match)
 
             $tag = $match.Groups['tag'].Value
-            $parts = $match.Groups['content'].Value -split '\\|'
+            $parts = $match.Groups['content'].Value -split '\|'
 
             switch ($tag) {
                 # 5etools: NAME | SOURCE | DISPLAY
