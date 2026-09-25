@@ -35,7 +35,7 @@ git clone https://github.com/SoulMinotaur515/dnd-5.5-character-packet.git
 cd dnd-5.5-character-packet
 ```
 
-Download the 2024 ruleset data (run once, or whenever you want to refresh):
+Download the rules data (run once, or whenever you want to refresh):
 ```powershell
 .\DownloadRepo-Features.ps1
 .\DownloadRepo-Spells.ps1
@@ -45,7 +45,7 @@ This populates the `Repo\` folder with:
 - `master-features.json` — class and subclass features, species traits
 - `master-backgrounds.json` — background definitions
 - `master-feats.json` — all 2024 feats (Origin, General, Epic Boon, Fighting Style)
-- `master-spells.json` — full 2024 spell list
+- `master-spells.json` — merged 5.5e/5e spell list, preferring 5.5e versions when duplicates exist
 
 ---
 
@@ -101,9 +101,11 @@ These folders are excluded from the repo and recreated at runtime.
 
 ## Ruleset
 
-All data is sourced from the **2024 Player's Handbook (XPHB)** only. Earlier edition content (2014 PHB, supplements) is intentionally excluded to keep the packet clean and consistent for new players.
+Feature data — classes, subclasses, species traits, backgrounds, and feats — is limited to the **2024 / D&D 5.5e ruleset**.
 
-Spell data from `DownloadRepo-Spells.ps1` supports multiple editions — see `Shared\Book-Index.html` for source abbreviations.
+Spell data is broader. `DownloadRepo-Spells.ps1` pulls supported spells from both **5.5e/2024** and **5e/2014** sources. When a spell exists in both editions, the 5.5e/2024 version takes precedence and the older version is omitted.
+
+Spell cards retain their source and edition information. See `Shared\Book-Index.html` for source abbreviations.
 
 ---
 
