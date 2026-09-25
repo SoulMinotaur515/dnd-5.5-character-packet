@@ -24,16 +24,75 @@ $Allowed2024Sources = @("XPHB", "DMG24", "MM24", "2024")
 $CardBodyMaxChars = 800
 $CardBodyCutChars = 560
 
+# Convert 5etools inline tags to display text using 5etools rendering semantics.
+function ConvertFrom-5eToolsInlineTags {
+    param([string]$Text)
+
+    if ([string]::IsNullOrEmpty($Text)) { return $Text }
+
+    return [regex]::Replace(
+        $Text,
+        '\\{@(?<tag>\\w+)\\s+(?<content>[^{}]+)\\}',
+        {
+            param($match)
+
+            $tag = $match.Groups['tag'].Value
+            $parts = $match.Groups['content'].Value -split '\\|'
+
+            switch ($tag) {
+                # 5etools: NAME | SOURCE | DISPLAY
+                { $_ -in @(
+                    'action',
+                    'condition',
+                    'creature',
+                    'feat',
+                    'item',
+                    'itemMastery',
+                    'itemProperty',
+                    'sense',
+                    'skill',
+                    'spell',
+                    'status',
+                    'table',
+                    'variantrule'
+                ) } {
+                    if ($parts.Count -ge 3 -and $parts[2]) { return $parts[2] }
+                    return $parts[0]
+                }
+
+                # 5etools dice/damage: ROLL | DISPLAY
+                { $_ -in @('damage', 'dice') } {
+                    if ($parts.Count -ge 2 -and $parts[1]) { return $parts[1] }
+                    return ($parts[0] -replace ';', '/')
+                }
+
+                # 5etools DC tags include the "DC" label in displayed text.
+                'dc' {
+                    if ($parts.Count -ge 2 -and $parts[1]) { return "DC $($parts[1])" }
+                    return "DC $($parts[0])"
+                }
+
+                # Tags whose first field is their human-readable text.
+                { $_ -in @('filter', '5etools', 'book', 'i') } {
+                    return $parts[0]
+                }
+
+                # Preserve readable text if a new/unknown 5etools tag appears.
+                default {
+                    return $parts[0]
+                }
+            }
+        }
+    )
+}
+
 # Helper to flatten 5etools entry trees into clean HTML
 function Get-EntryHtml ($entry) {
     if (-not $entry) { return "" }
 
-    # If it's a simple string, clean up internal 5etools inline tags
+    # If it's a simple string, convert internal 5etools inline tags
     if ($entry -is [string]) {
-        $clean = $entry
-        # Strip 5etools tags like {@type=item...}, {@feat...}, {@item...}
-        $clean = $clean -replace '\{@\w+ ([^}|]+)(\|[^}]+)?\}', '$1'
-        $clean = $clean -replace '\{@\w+ ([^}]+)\}', '$1'
+        $clean = ConvertFrom-5eToolsInlineTags $entry
         return "<p>$clean</p>"
     }
 
@@ -316,10 +375,10 @@ try {
                 $featNames = @()
                 foreach ($f in $bg.feats) {
                     if ($f -is [string]) {
-                        $fClean = $f -replace '\{@feat ([^}|]+)(\|[^}]+)?\}', '$1'
+                        $fClean = ConvertFrom-5eToolsInlineTags $f
                         $featNames += $fClean
                     } elseif ($f.psobject.Properties['feat']) {
-                        $fClean = $f.feat -replace '\{@feat ([^}|]+)(\|[^}]+)?\}', '$1'
+                        $fClean = ConvertFrom-5eToolsInlineTags $f.feat
                         $featNames += $fClean
                     }
                 }
