@@ -14,9 +14,6 @@ $Base2024Url        = "https://raw.githubusercontent.com/5etools-mirror-3/5etool
 # Whitelist for 2024 Rulebook Sources (XPHB = 2024 Player's Handbook)
 $Allowed2024Sources = @("XPHB", "DMG24", "MM24", "2024")
 
-# Action metadata classifier (raw 5etools entries, before HTML conversion).
-. (Join-Path $PSScriptRoot "Features/FeatureAction.ps1")
-
 # ==========================================
 # CARD BODY CALIBRATION
 # Based on Feature-Card-Template.html at 7.2pt Arial.
@@ -229,7 +226,7 @@ try {
                         category      = "Class Feature"
                         source        = "$cName Level $($cf.level)"
                         level         = $cf.level
-                        actionType    = Get-FeatureActionType -Entries $cf.entries -Name $cf.name -Owner $cName -Source $cf.source -Kind "Class Feature"
+                        actionType    = if ($cf.header) { "Action" } else { "Passive" }
                         usage         = "At Will"
                         body          = $bodyHtml
                         className     = $cName
@@ -257,7 +254,7 @@ try {
                         category      = "Subclass ($($sf.subclassShortName))"
                         source        = "$($sf.subclassShortName) Level $($sf.level)"
                         level         = $sf.level
-                        actionType    = Get-FeatureActionType -Entries $sf.entries -Name $sf.name -Owner $cName -Source $sf.source -Kind "Subclass Feature"
+                        actionType    = "Feature"
                         usage         = "At Will"
                         body          = $bodyHtml
                         className     = $cName
@@ -323,7 +320,7 @@ foreach ($rFile in $raceFiles) {
                             category      = "Species Trait"
                             source        = $raceName
                             level         = 0
-                            actionType    = Get-FeatureActionType -Entries $entry.entries -Name $entry.name -Owner $raceName -Source $r.source -Kind "Species Trait"
+                            actionType    = "Trait"
                             usage         = "At Will"
                             body          = $bodyHtml
                             className     = $raceName
@@ -401,7 +398,7 @@ try {
                 category      = "Background"
                 source        = "$bgName Background"
                 level         = 0
-                actionType    = Get-FeatureActionType -Entries $bg.entries -Name $bgName -Owner $bg.source -Source $bg.source -Kind "Background"
+                actionType    = "Background"
                 usage         = "Passive"
                 body          = $bodyHtml
                 className     = $bgName
@@ -481,7 +478,7 @@ try {
                 source        = "XPHB p.$($feat.page)"
                 level         = 0
                 prerequisite  = $prereqText
-                actionType    = Get-FeatureActionType -Entries $feat.entries -Name $feat.name -Owner $catCode -Source $feat.source -Kind "Feat"
+                actionType    = "Feat"
                 usage         = "Passive"
                 body          = $bodyHtml
                 className     = ""
